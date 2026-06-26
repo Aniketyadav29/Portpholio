@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aniket Yadav - Software & Backend Developer | 3D Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Core Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Three.js Post-Processing Shaders for Cinematic Neon Glow -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+</head>
+<body>
+    <!-- ENTIRE RESUME MODAL -->
+    <div id="resumeModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.95); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; backdrop-filter: blur(5px);">
+        
+        <div style="width: 100%; max-width: 800px; display: flex; justify-content: flex-end; margin-bottom: 10px;">
+            <button id="closeModalBtn" style="background: transparent; border: none; color: #ffa500; font-size: 45px; cursor: pointer; transition: 0.2s;">&times;</button>
+        </div>
+        
+        <img src="resume.png" alt="Aniket Yadav Resume" width="800" height="1130" loading="lazy" decoding="async" style="width: 100%; max-width: 800px; max-height: 70vh; object-fit: contain; border-radius: 8px; box-shadow: 0px 0px 40px rgba(255, 165, 0, 0.2); margin-bottom: 25px; background: #fff;">
+        
+        <a href="resume.png" download="Aniket_Yadav_Resume.png" style="background: #ffa500; color: #000; padding: 15px 30px; font-size: 1.1rem; font-weight: bold; text-decoration: none; border-radius: 50px; display: flex; gap: 10px; align-items: center; box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3);">
+            <i class="fas fa-download"></i> Download Resume
+        </a>
+    </div>
+
+    <!-- 3D Background Canvas -->
+    <canvas id="threejs-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-cube"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#credentials">Credentials</a></li>
+                <li><a href="#github">GitHub</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-avatar">
+                <div class="avatar-placeholder">
+                    <img src="Aniket.png" alt="Aniket Yadav" class="avatar-image" width="400" height="400" fetchpriority="high" decoding="async">
+                    <div class="avatar-fallback">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-text">
+                <p class="greeting">HELLO! I'M</p>
+                <h1 class="hero-title">Aniket Yadav</h1>
+                <p class="hero-subtitle">A passionate <span class="highlight">Data Scientist & AI-Driven</span> Engineer</p>
+                <p class="hero-description">Forward-thinking <strong>Data Science professional</strong> currently completing my final year of B.Tech at BBD. I specialize in leveraging <strong>Artificial Intelligence</strong> and <strong>Machine Learning</strong> to drive innovation and organizational impact. With a technical portfolio encompassing AI-driven credit risk evaluation systems and intelligent career platforms, I bring a holistic approach to problem-solving.</p>
+                <div class="hero-buttons">
+                    <button class="btn-resume" id="downloadResume">
+                        <i class="fas fa-eye"></i> View Resume
+                    </button>
+                    <a href="https://linkedin.com/in/aniketyadav29" target="_blank" class="btn-contact">
+                        <i class="fab fa-linkedin"></i> Connect
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="section-header">
+            <p class="section-label">WHO I AM</p>
+            <h2>About Me</h2>
+        </div>
+        <div class="about-content">
+            <div class="about-description">
+                <p>I build systems that work — fast, reliable, and intelligently scalable.</p>
+                <p>Specializing in full-stack engineering, workflow automation, and custom AI integrations. I bridge traditional computing structures with dynamic models like LLMs and RAG pipelines to build maintainable applications designed for real-world reliability.</p>
+            </div>
+            <div class="education">
+                <h3>EDUCATION</h3>
+                <div class="education-item">
+                    <h4>Babu Banarasi Das University (BBD)</h4>
+                    <p class="year">2023 – Present</p>
+                    <p class="description">Currently pursuing a Bachelor of Technology (B.Tech) in Computer Science & Engineering. Actively specializing in practical application of machine learning architectures and backend robustness under mentorship.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flat Projects Slider Section -->
+    <section class="projects" id="projects">
+        <div class="projects-header-wrapper">
+            <div class="projects-header-left">
+                <p class="section-label">FEATURED WORK</p>
+                <h2>Selected Projects</h2>
+            </div>
+            <div class="projects-nav-controls">
+                <button class="slider-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div class="projects-slider-viewport">
+            <div class="projects-track">
+                
+                <!-- Project 1 -->
+                <div class="project-slide active" data-index="0">
+                    <div class="slide-watermark"><i class="fas fa-brain"></i></div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-header">
+                        <span class="slide-status"><span class="status-dot"></span> Live</span>
+                        <span class="slide-number">01</span>
+                    </div>
+                    <div class="slide-content">
+                        <h3>Credo-fin</h3>
+                        <p>An AI-driven credit scoring platform engineered to assess borrower risk profiles for underbanked populations.</p>
+                        <div class="slide-tags">
+                            <span>Python</span><span>XGBoost</span><span>Gemini LLM</span><span>MongoDB</span>
+                        </div>
+                        <a href="https://github.com/Aniketyadav29" target="_blank" class="btn-slide-link"><i class="fas fa-code"></i> Code</a>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-slide" data-index="1">
+                    <div class="slide-watermark"><i class="fas fa-microphone-lines"></i></div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-header">
+                        <span class="slide-status"><span class="status-dot"></span> Live</span>
+                        <span class="slide-number">02</span>
+                    </div>
+                    <div class="slide-content">
+                        <h3>Voice-Based Assistant</h3>
+                        <p>A fully modular desktop voice controller built utilizing advanced Python speech libraries for system automation.</p>
+                        <div class="slide-tags">
+                            <span>Python</span><span>SpeechRecognition</span><span>Automation</span>
+                        </div>
+                        <a href="https://github.com/Aniketyadav29" target="_blank" class="btn-slide-link"><i class="fas fa-code"></i> Code</a>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-slide" data-index="2">
+                    <div class="slide-watermark"><i class="fas fa-leaf"></i></div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-header">
+                        <span class="slide-status"><span class="status-dot"></span> Live</span>
+                        <span class="slide-number">03</span>
+                    </div>
+                    <div class="slide-content">
+                        <h3>AAYU</h3>
+                        <p>Conversational utility delivering Ayurvedic wellness logic. Features condition severity evaluation logic (mild/moderate/severe) over Twilio.</p>
+                        <div class="slide-tags">
+                            <span>Flask</span><span>Twilio API</span><span>RAG Pipeline</span><span>SQLite</span>
+                        </div>
+                        <a href="https://github.com/Aniketyadav29" target="_blank" class="btn-slide-link"><i class="fas fa-code"></i> Code</a>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-slide" data-index="3">
+                    <div class="slide-watermark"><i class="fas fa-briefcase"></i></div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-header">
+                        <span class="slide-status"><span class="status-dot"></span> Live</span>
+                        <span class="slide-number">04</span>
+                    </div>
+                    <div class="slide-content">
+                        <h3>AURA AI Career Co-Pilot</h3>
+                        <p>An intelligent career-focused platform designed with advanced web scraping and programmatic profile matching agents.</p>
+                        <div class="slide-tags">
+                            <span>Python</span><span>Web Scraping</span><span>AI Agents</span>
+                        </div>
+                        <a href="https://github.com/Aniketyadav29" target="_blank" class="btn-slide-link"><i class="fas fa-code"></i> Code</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="projects-footer">
+            <div class="slider-indicators">
+                <span class="dash active" data-index="0"></span>
+                <span class="dash" data-index="1"></span>
+                <span class="dash" data-index="2"></span>
+                <span class="dash" data-index="3"></span>
+            </div>
+            <a href="https://github.com/Aniketyadav29" target="_blank" class="btn-view-all">View All Projects <i class="fas fa-external-link-alt"></i></a>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stat-item">
+            <h3>4+</h3>
+            <p>Projects Built</p>
+        </div>
+        <div class="stat-item">
+            <h3>7</h3>
+            <p>GitHub Repos</p>
+        </div>
+        <div class="stat-item">
+            <h3>3</h3>
+            <p>Certifications</p>
+        </div>
+        <div class="stat-item">
+            <h3>55+</h3>
+            <p>Technologies Stacked</p>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <div class="section-header">
+            <p class="section-label">EXPERTISE</p>
+            <h2>Technical Skills</h2>
+        </div>
+
+        <!-- NEW SKILLS DASHBOARD (Filters & Breakdown) -->
+        <div class="skills-dashboard">
+            <div class="skills-filters">
+                <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All</button>
+                <button class="filter-btn" type="button" data-filter="backend" aria-pressed="false">Backend <span class="filter-count">5</span></button>
+                <button class="filter-btn" type="button" data-filter="frontend" aria-pressed="false">Frontend <span class="filter-count">7</span></button>
+                <button class="filter-btn" type="button" data-filter="libraries" aria-pressed="false">Libraries & Frameworks <span class="filter-count">9</span></button>
+                <button class="filter-btn" type="button" data-filter="database-cloud" aria-pressed="false">Database and Cloud <span class="filter-count">10</span></button>
+                <button class="filter-btn" type="button" data-filter="devops" aria-pressed="false">DevOps <span class="filter-count">10</span></button>
+                <button class="filter-btn" type="button" data-filter="ai-ml" aria-pressed="false">AI & ML <span class="filter-count">3</span></button>
+            </div>
+
+            <div class="skills-breakdown-card">
+                <h4 class="breakdown-header">CATEGORY BREAKDOWN</h4>
+                <div class="breakdown-list">
+                    <div class="breakdown-item">
+                        <div class="breakdown-info"><span class="breakdown-name">Backend</span><span class="breakdown-count">5 skills</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 50%;"></div></div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-info"><span class="breakdown-name">Frontend</span><span class="breakdown-count">7 skills</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 70%;"></div></div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-info"><span class="breakdown-name">Libraries & Frameworks</span><span class="breakdown-count">9 skills</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 90%;"></div></div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-info"><span class="breakdown-name">Database and Cloud</span><span class="breakdown-count">10 skills</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-info"><span class="breakdown-name">DevOps</span><span class="breakdown-count">10 skills</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-info"><span class="breakdown-name">AI & ML</span><span class="breakdown-count">3 skills</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 30%;"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="skills-intro">Interactive Topology · Drag to rotate Sphere, or toggle bottom-right button for Flat Grid Mode.</p>
+        
+        <!-- 3D SPHERE CONTAINER -->
+        <div class="skills-3d-sphere-wrapper">
+            <div id="skills-3d-canvas-container"></div>
+        </div>
+        
+        <!-- FALLBACK 55 ITEM FLEX GRID (Shown in Flat Mode) -->
+        <div class="skills-container">
+            <div class="skill-item wobble-3d" data-tilt data-categories="backend" style="--wobble-delay: 0.1s"><i class="fas fa-network-wired"></i><span>aiohttp</span></div>
+            <div class="skill-item wobble-3d" data-tilt style="--wobble-delay: 0.2s"><i class="fas fa-rocket"></i><span>Antigravity</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="database-cloud" style="--wobble-delay: 0.3s"><i class="fab fa-aws"></i><span>AWS</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="database-cloud" style="--wobble-delay: 0.4s"><i class="fas fa-cloud"></i><span>AWS Basics</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="libraries" style="--wobble-delay: 0.5s"><i class="fas fa-code"></i><span>Beautiful Soup</span></div>
+            <div class="skill-item wobble-3d" data-tilt style="--wobble-delay: 0.6s"><i class="fas fa-c"></i><span>C</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="frontend" style="--wobble-delay: 0.7s"><i class="fab fa-css3-alt"></i><span>CSS</span></div>
+            <div class="skill-item wobble-3d" data-tilt style="--wobble-delay: 0.8s"><i class="fas fa-chart-pie"></i><span>Data Visualization</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="ai-ml" style="--wobble-delay: 0.9s"><i class="fas fa-brain"></i><span>Deep Learning</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="backend" style="--wobble-delay: 0.1s"><i class="fas fa-layer-group"></i><span>Django</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="devops" style="--wobble-delay: 0.2s"><i class="fab fa-docker"></i><span>Docker</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="backend" style="--wobble-delay: 0.3s"><i class="fas fa-bolt"></i><span>FastAPI</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="devops" style="--wobble-delay: 0.4s"><i class="fas fa-box-open"></i><span>FastAPI + Docker</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="ai-ml" style="--wobble-delay: 0.5s"><i class="fas fa-sparkles"></i><span>Generative AI</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="devops" style="--wobble-delay: 0.6s"><i class="fab fa-git-alt"></i><span>Git</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="devops" style="--wobble-delay: 0.7s"><i class="fab fa-github"></i><span>GitHub</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="database-cloud" style="--wobble-delay: 0.8s"><i class="fab fa-google"></i><span>Google Cloud</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="database-cloud" style="--wobble-delay: 0.9s"><i class="fas fa-file-code"></i><span>Google Colab</span></div>
+            <div class="skill-item wobble-3d" data-tilt style="--wobble-delay: 0.1s"><i class="fab fa-google-drive"></i><span>Google Drive</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="frontend" style="--wobble-delay: 0.2s"><i class="fab fa-html5"></i><span>HTML</span></div>
+            <div class="skill-item wobble-3d" data-tilt style="--wobble-delay: 0.3s"><i class="fab fa-java"></i><span>Java</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="frontend" style="--wobble-delay: 0.4s"><i class="fab fa-js"></i><span>JavaScript</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="devops" style="--wobble-delay: 0.5s"><i class="fas fa-dharmachakra"></i><span>Kubernetes</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="devops" style="--wobble-delay: 0.6s"><i class="fab fa-linux"></i><span>Linux</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="devops" style="--wobble-delay: 0.7s"><i class="fas fa-desktop"></i><span>Local OS</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="ai-ml" style="--wobble-delay: 0.8s"><i class="fas fa-robot"></i><span>Machine Learning</span></div>
+            <div class="skill-item wobble-3d" data-tilt style="--wobble-delay: 0.9s"><i class="fas fa-cloud-upload-alt"></i><span>MEGA</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="database-cloud" style="--wobble-delay: 0.1s"><i class="fas fa-leaf"></i><span>MongoDB</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="database-cloud" style="--wobble-delay: 0.2s"><i class="fas fa-database"></i><span>MySQL</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="frontend" style="--wobble-delay: 0.3s"><i class="fas fa-forward"></i><span>Next.js</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="backend" style="--wobble-delay: 0.4s"><i class="fab fa-node-js"></i><span>Node.js</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="libraries" style="--wobble-delay: 0.5s"><i class="fas fa-square-root-alt"></i><span>Numpy</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="libraries" style="--wobble-delay: 0.6s"><i class="fas fa-table"></i><span>Pandas</span></div>
+            <div class="skill-item wobble-3d" data-tilt style="--wobble-delay: 0.7s"><i class="fas fa-chart-bar"></i><span>Pandas + NumPy</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="libraries" style="--wobble-delay: 0.8s"><i class="fas fa-theater-masks"></i><span>Playwright</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="database-cloud" style="--wobble-delay: 0.9s"><i class="fas fa-database"></i><span>PostgreSQL</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="libraries" style="--wobble-delay: 0.1s"><i class="fas fa-paper-plane"></i><span>Pyrogram</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="backend" style="--wobble-delay: 0.2s"><i class="fab fa-python"></i><span>Python</span></div>
+            <div class="skill-item wobble-3d" data-tilt style="--wobble-delay: 0.3s"><i class="fab fa-python"></i><span>Python Advanced</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="libraries" style="--wobble-delay: 0.4s"><i class="fas fa-fire"></i><span>PyTorch</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="devops" style="--wobble-delay: 0.5s"><i class="fas fa-network-wired"></i><span>RDP</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="frontend" style="--wobble-delay: 0.6s"><i class="fab fa-react"></i><span>React</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="libraries" style="--wobble-delay: 0.7s"><i class="fas fa-exchange-alt"></i><span>Requests</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="database-cloud" style="--wobble-delay: 0.8s"><i class="fas fa-database"></i><span>SQL</span></div>
+            <div class="skill-item wobble-3d" data-tilt style="--wobble-delay: 0.9s"><i class="fas fa-flask"></i><span>SQLAlchemy</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="database-cloud" style="--wobble-delay: 0.1s"><i class="fas fa-database"></i><span>SQLite</span></div>
+            <div class="skill-item wobble-3d" data-tilt style="--wobble-delay: 0.2s"><i class="fas fa-chart-line"></i><span>Statistics & Prob</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="database-cloud" style="--wobble-delay: 0.3s"><i class="fas fa-database"></i><span>Supabase</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="frontend" style="--wobble-delay: 0.4s"><i class="fas fa-wind"></i><span>TailwindCSS</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="libraries" style="--wobble-delay: 0.5s"><i class="fas fa-paper-plane"></i><span>Telethon</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="libraries" style="--wobble-delay: 0.6s"><i class="fas fa-robot"></i><span>Transformers</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="frontend" style="--wobble-delay: 0.7s"><i class="fas fa-code"></i><span>TypeScript</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="devops" style="--wobble-delay: 0.8s"><i class="fas fa-server"></i><span>VPS</span></div>
+            <div class="skill-item wobble-3d" data-tilt data-categories="devops" style="--wobble-delay: 0.9s"><i class="fas fa-code"></i><span>VS Code</span></div>
+            <div class="skill-item wobble-3d" data-tilt style="--wobble-delay: 0.1s"><i class="fas fa-project-diagram"></i><span>XGBoost</span></div>
+        </div>
+    </section>
+
+    <!-- Credentials Section -->
+    <section class="credentials" id="credentials">
+        <div class="section-header">
+            <p class="section-label">ACHIEVEMENTS</p>
+            <h2>My Credentials</h2>
+            <p class="credentials-subtitle">3 verified achievements and certificates</p>
+        </div>
+
+        <div class="credential-filters" aria-label="Credential filters">
+            <button class="credential-filter active" type="button" data-credential-filter="all" aria-pressed="true">All</button>
+            <button class="credential-filter" type="button" data-credential-filter="certificate" aria-pressed="false">Certificates <span>2</span></button>
+            <button class="credential-filter" type="button" data-credential-filter="hackathon" aria-pressed="false">Hackathon <span>1</span></button>
+        </div>
+
+        <div class="credentials-timeline">
+            <article class="credential-card credential-with-image" data-credential-type="certificate">
+                <span class="credential-pin" aria-hidden="true"></span>
+                <a href="Python certificate.png" target="_blank" class="credential-image-container" aria-label="Open Python certificate">
+                    <img src="Python certificate.png" alt="Python course certificate" class="cert-image" loading="lazy">
+                </a>
+                <div class="credential-copy">
+                    <span class="credential-type">Certificate</span>
+                    <h4>Python Course</h4>
+                    <p>Kaggle Learn</p>
+                </div>
+            </article>
+
+            <article class="credential-card credential-with-image" data-credential-type="certificate">
+                <span class="credential-pin" aria-hidden="true"></span>
+                <a href="Prompt emgineering certificate.png" target="_blank" class="credential-image-container" aria-label="Open prompt engineering certificate">
+                    <img src="Prompt emgineering certificate.png" alt="Prompt engineering certificate" class="cert-image" loading="lazy">
+                </a>
+                <div class="credential-copy">
+                    <span class="credential-type">Certificate</span>
+                    <h4>Prompt Engineering Zero to Hero</h4>
+                    <p>Lets Upgrade</p>
+                </div>
+            </article>
+
+            <article class="credential-card credential-with-image" data-credential-type="hackathon">
+                <span class="credential-pin" aria-hidden="true"></span>
+                <a href="Hackthon certificate.png" target="_blank" class="credential-image-container" aria-label="Open hackathon certificate">
+                    <img src="Hackthon certificate.png" alt="Hackathon certificate" class="cert-image" loading="lazy">
+                </a>
+                <div class="credential-copy">
+                    <span class="credential-type">Hackathon</span>
+                    <h4>Coderush 2.0 Hackathon</h4>
+                    <p>BBDNIIT Participation</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- GitHub Contributions Section -->
+    <section class="github-contributions" id="github">
+        <div class="section-header">
+            <p class="section-label">OPEN SOURCE DEVELOPER</p>
+            <h2>Daily Contributions</h2>
+        </div>
+        <div class="github-container">
+            <div class="github-stats">
+                <div class="stat">
+                    <div class="stat-value">7</div>
+                    <div class="stat-label">Public Repos</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">1000+</div>
+                    <div class="stat-label">Total Contributions</div>
+                </div>
+            </div>
+            <div class="github-graph">
+                <div class="github-card-container">
+                    <!-- ULTRA CACHE BUSTER ADDED & STRICT LOWERCASE USERNAME -->
+                    <img src="https://github-readme-stats.vercel.app/api?username=aniketyadav29&show_icons=true&theme=dark&hide_border=true&bg_color=0a0a0a&title_color=ffa500&icon_color=ffa500&text_color=e0e0e0&cache_seconds=0&v=999" alt="GitHub Stats" class="github-card" loading="lazy">
+                </div>
+
+                <!-- LIVE CONTRIBUTION HEATMAP GRAPH -->
+                <div class="github-calendar-container">
+                    <h3 class="github-label" style="text-align: left; margin-bottom: 15px; font-size: 1rem;">Contributions in the last year</h3>
+                    <div class="calendar-scroll">
+                        <!-- ULTRA CACHE BUSTER ADDED -->
+                        <img src="https://ghchart.rshah.org/4caf53/aniketyadav29?v=999" alt="GitHub Contribution Graph" class="github-calendar-img" loading="lazy">
+                    </div>
+                </div>
+
+                <a href="https://github.com/Aniketyadav29" target="_blank" class="btn-github">
+                    <i class="fab fa-github"></i> View Live Profile
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-content">
+            <div class="contact-left">
+                <h3>Tell me what you want to build.</h3>
+                <p>Looking for a performant custom API interface, custom automation system workflows, or LLM agents? Let's discuss requirements directly.</p>
+                <div class="contact-meta">
+                    <div class="meta-item"><span class="meta-label">ROUTINE RESPONSE</span><span class="meta-value">Within 24-48 Hours</span></div>
+                </div>
+            </div>
+            <div class="contact-right">
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group"><label>YOUR NAME</label><input type="text" placeholder="Full name" required></div>
+                        <div class="form-group"><label>EMAIL ADDRESS</label><input type="email" placeholder="you@example.com" required></div>
+                        <div class="form-group"><label>YOUR BRIEF</label><textarea placeholder="Describe the scope, timeline, and objective" rows="5" required></textarea></div>
+                        <button type="submit" class="btn-send">Send Brief →</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="social-links">
+            <a href="mailto:anikety7905@gmail.com"><i class="fas fa-envelope"></i></a>
+            <a href="https://github.com/Aniketyadav29" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/aniketyadav29" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <p class="footer-copyright">© 2026 Aniket Yadav | Babu Banarasi Das University</p>
+    </footer>
+
+    <!-- Floating Navigation Controls -->
+    <div class="floating-nav">
+        <button class="float-btn" title="Scroll to top"><i class="fas fa-arrow-up"></i></button>
+        <button class="float-btn toggle-3d" title="Toggle Graphics Engine (3D Sphere vs Grid)"><i class="fas fa-cube"></i></button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <script src="script.js"></script>
+    <script src="3d-effects.js"></script>
+
+    <!-- 3D TagCloud Engine for Skills Sphere -->
+    <script src="https://cdn.jsdelivr.net/npm/TagCloud@2.2.0/dist/TagCloud.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Updated array combining FontAwesome icons and text
+            const mySkills = [
+                '<div class="sphere-item"><i class="fas fa-network-wired"></i><span>aiohttp</span></div>',
+                '<div class="sphere-item"><i class="fas fa-rocket"></i><span>Antigravity</span></div>',
+                '<div class="sphere-item"><i class="fab fa-aws"></i><span>AWS</span></div>',
+                '<div class="sphere-item"><i class="fas fa-cloud"></i><span>AWS Basics</span></div>',
+                '<div class="sphere-item"><i class="fas fa-code"></i><span>Beautiful Soup</span></div>',
+                '<div class="sphere-item"><i class="fas fa-c"></i><span>C</span></div>',
+                '<div class="sphere-item"><i class="fab fa-css3-alt"></i><span>CSS</span></div>',
+                '<div class="sphere-item"><i class="fas fa-chart-pie"></i><span>Data Viz</span></div>',
+                '<div class="sphere-item"><i class="fas fa-brain"></i><span>Deep Learning</span></div>',
+                '<div class="sphere-item"><i class="fas fa-layer-group"></i><span>Django</span></div>',
+                '<div class="sphere-item"><i class="fab fa-docker"></i><span>Docker</span></div>',
+                '<div class="sphere-item"><i class="fas fa-bolt"></i><span>FastAPI</span></div>',
+                '<div class="sphere-item"><i class="fas fa-box-open"></i><span>FastAPI+Docker</span></div>',
+                '<div class="sphere-item"><i class="fas fa-sparkles"></i><span>Generative AI</span></div>',
+                '<div class="sphere-item"><i class="fab fa-git-alt"></i><span>Git</span></div>',
+                '<div class="sphere-item"><i class="fab fa-github"></i><span>GitHub</span></div>',
+                '<div class="sphere-item"><i class="fab fa-google"></i><span>Google Cloud</span></div>',
+                '<div class="sphere-item"><i class="fas fa-file-code"></i><span>Google Colab</span></div>',
+                '<div class="sphere-item"><i class="fab fa-google-drive"></i><span>Google Drive</span></div>',
+                '<div class="sphere-item"><i class="fab fa-html5"></i><span>HTML</span></div>',
+                '<div class="sphere-item"><i class="fab fa-java"></i><span>Java</span></div>',
+                '<div class="sphere-item"><i class="fab fa-js"></i><span>JavaScript</span></div>',
+                '<div class="sphere-item"><i class="fas fa-dharmachakra"></i><span>Kubernetes</span></div>',
+                '<div class="sphere-item"><i class="fab fa-linux"></i><span>Linux</span></div>',
+                '<div class="sphere-item"><i class="fas fa-desktop"></i><span>Local OS</span></div>',
+                '<div class="sphere-item"><i class="fas fa-robot"></i><span>Machine Learning</span></div>',
+                '<div class="sphere-item"><i class="fas fa-cloud-upload-alt"></i><span>MEGA</span></div>',
+                '<div class="sphere-item"><i class="fas fa-leaf"></i><span>MongoDB</span></div>',
+                '<div class="sphere-item"><i class="fas fa-database"></i><span>MySQL</span></div>',
+                '<div class="sphere-item"><i class="fas fa-forward"></i><span>Next.js</span></div>',
+                '<div class="sphere-item"><i class="fab fa-node-js"></i><span>Node.js</span></div>',
+                '<div class="sphere-item"><i class="fas fa-square-root-alt"></i><span>Numpy</span></div>',
+                '<div class="sphere-item"><i class="fas fa-table"></i><span>Pandas</span></div>',
+                '<div class="sphere-item"><i class="fas fa-chart-bar"></i><span>Pandas+NumPy</span></div>',
+                '<div class="sphere-item"><i class="fas fa-theater-masks"></i><span>Playwright</span></div>',
+                '<div class="sphere-item"><i class="fas fa-database"></i><span>PostgreSQL</span></div>',
+                '<div class="sphere-item"><i class="fas fa-paper-plane"></i><span>Pyrogram</span></div>',
+                '<div class="sphere-item"><i class="fab fa-python"></i><span>Python</span></div>',
+                '<div class="sphere-item"><i class="fab fa-python"></i><span>Python Adv</span></div>',
+                '<div class="sphere-item"><i class="fas fa-fire"></i><span>PyTorch</span></div>',
+                '<div class="sphere-item"><i class="fas fa-network-wired"></i><span>RDP</span></div>',
+                '<div class="sphere-item"><i class="fab fa-react"></i><span>React</span></div>',
+                '<div class="sphere-item"><i class="fas fa-exchange-alt"></i><span>Requests</span></div>',
+                '<div class="sphere-item"><i class="fas fa-database"></i><span>SQL</span></div>',
+                '<div class="sphere-item"><i class="fas fa-flask"></i><span>SQLAlchemy</span></div>',
+                '<div class="sphere-item"><i class="fas fa-database"></i><span>SQLite</span></div>',
+                '<div class="sphere-item"><i class="fas fa-chart-line"></i><span>Statistics</span></div>',
+                '<div class="sphere-item"><i class="fas fa-database"></i><span>Supabase</span></div>',
+                '<div class="sphere-item"><i class="fas fa-wind"></i><span>TailwindCSS</span></div>',
+                '<div class="sphere-item"><i class="fas fa-paper-plane"></i><span>Telethon</span></div>',
+                '<div class="sphere-item"><i class="fas fa-robot"></i><span>Transformers</span></div>',
+                '<div class="sphere-item"><i class="fas fa-code"></i><span>TypeScript</span></div>',
+                '<div class="sphere-item"><i class="fas fa-server"></i><span>VPS</span></div>',
+                '<div class="sphere-item"><i class="fas fa-code"></i><span>VS Code</span></div>',
+                '<div class="sphere-item"><i class="fas fa-project-diagram"></i><span>XGBoost</span></div>'
+            ];
+
+            // Increased radius drastically to prevent the 55 icons from overlapping.
+            const radiusValue = window.innerWidth > 768 ? 400 : 200;
+
+            TagCloud('#skills-3d-canvas-container', mySkills, {
+                radius: radiusValue,
+                maxSpeed: 'fast',
+                initSpeed: 'normal',
+                direction: 135,
+                keep: true,
+                useHTML: true
+            });
+
+            // The default library sanitizes the HTML arrays into raw text. 
+            // This runs immediately after the sphere loads to convert the text back into proper HTML elements!
+            const items = document.querySelectorAll('.tagcloud--item');
+            items.forEach(function(item) {
+                item.innerHTML = item.textContent;
+            });
+        });
+    </script>
+</body>
+</html>
