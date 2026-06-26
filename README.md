@@ -3,7 +3,7 @@
 Welcome to my professional portfolio! This repository contains my personal projects and showcases my work in Full-Stack Web Development and AI/ML technologies.
 
 ## 🚀 Live Demo
-Check out my live portfolio here: [https://warm-cajeta-67b92c.netlify.app/](https://warm-cajeta-67b92c.netlify.app/)
+[![Live Project](https://img.shields.io/badge/🚀%20LIVE%20PROJECT-Portfolio-black?style=flat)](https://warm-cajeta-67b92c.netlify.app/)
 
 ## 🛠 Tech Stack
 *   **Web Development**: HTML, CSS, JavaScript
