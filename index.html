@@ -4,7 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aniket Yadav - Software & Backend Developer | 3D Portfolio</title>
+    <meta name="description" content="Aniket Yadav — Data Scientist & AI-Driven Engineer specializing in machine learning, AI-powered platforms, and backend development. Explore projects, skills, and credentials.">
+
+    <!-- Open Graph / Facebook, LinkedIn, WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Aniket Yadav - Software & Backend Developer | 3D Portfolio">
+    <meta property="og:description" content="Data Scientist & AI-Driven Engineer specializing in machine learning, AI-powered platforms, and backend development.">
+    <meta property="og:image" content="Aniket.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Aniket Yadav - Software & Backend Developer | 3D Portfolio">
+    <meta name="twitter:description" content="Data Scientist & AI-Driven Engineer specializing in machine learning, AI-powered platforms, and backend development.">
+    <meta name="twitter:image" content="Aniket.png">
+
+    <link rel="icon" type="image/png" href="Aniket.png">
+    <link rel="apple-touch-icon" href="Aniket.png">
+
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Core Three.js -->
@@ -19,18 +38,48 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
 </head>
 <body>
+    <!-- All-Black 3D Name Writing Intro -->
+    <div id="intro3d" class="intro-3d" aria-label="Portfolio intro animation">
+        <div class="intro-logo-copy" aria-hidden="true">
+            <div class="intro-logo-mark">
+                <span class="intro-logo-letter">A</span>
+                <span class="intro-logo-orb">
+                    <span class="orb-ring orb-ring-outer"></span>
+                    <span class="orb-ring orb-ring-inner"></span>
+                    <span class="orb-dot"></span>
+                </span>
+                <span class="intro-logo-letter">Y</span>
+            </div>
+            <div class="intro-logo-sub">ANIKET YADAV<span class="intro-logo-dot">&middot;</span>PORTFOLIO</div>
+        </div>
+    </div>
+
     <!-- ENTIRE RESUME MODAL -->
     <div id="resumeModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.95); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; backdrop-filter: blur(5px);">
         
         <div style="width: 100%; max-width: 800px; display: flex; justify-content: flex-end; margin-bottom: 10px;">
-            <button id="closeModalBtn" style="background: transparent; border: none; color: #ffa500; font-size: 45px; cursor: pointer; transition: 0.2s;">&times;</button>
+            <button id="closeModalBtn" style="background: transparent; border: none; color: #F0EDCC; font-size: 45px; cursor: pointer; transition: 0.2s;">&times;</button>
         </div>
         
-        <img src="resume.png" alt="Aniket Yadav Resume" width="800" height="1130" loading="lazy" decoding="async" style="width: 100%; max-width: 800px; max-height: 70vh; object-fit: contain; border-radius: 8px; box-shadow: 0px 0px 40px rgba(255, 165, 0, 0.2); margin-bottom: 25px; background: #fff;">
-        
-        <a href="resume.png" download="Aniket_Yadav_Resume.png" style="background: #ffa500; color: #000; padding: 15px 30px; font-size: 1.1rem; font-weight: bold; text-decoration: none; border-radius: 50px; display: flex; gap: 10px; align-items: center; box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3);">
+        <iframe src="resume.pdf" title="Aniket Yadav Resume" loading="lazy" style="width: 100%; max-width: 800px; height: 70vh; border: none; border-radius: 8px; box-shadow: 0px 0px 40px rgba(240, 237, 204, 0.2); margin-bottom: 25px; background: #fff;"></iframe>
+
+        <a href="resume.pdf" download="Aniket_Yadav_Resume.pdf" style="background: #F0EDCC; color: #02343F; padding: 15px 30px; font-size: 1.1rem; font-weight: bold; text-decoration: none; border-radius: 50px; display: flex; gap: 10px; align-items: center; box-shadow: 0 4px 15px rgba(240, 237, 204, 0.3);">
             <i class="fas fa-download"></i> Download Resume
         </a>
+    </div>
+
+    <!-- PROJECT LINK CHOOSER -->
+    <div id="projectChoiceModal" class="project-choice-modal" aria-hidden="true">
+        <div class="project-choice-card" role="dialog" aria-modal="true" aria-labelledby="projectChoiceTitle">
+            <button class="project-choice-close" type="button" aria-label="Close project link chooser">&times;</button>
+            <p class="section-label">OPEN PROJECT</p>
+            <h3 id="projectChoiceTitle">Project</h3>
+            <p class="project-choice-copy">Choose where you want to go.</p>
+            <div class="project-choice-actions">
+                <a id="projectGithubLink" class="project-choice-link" href="#" target="_blank"><i class="fab fa-github"></i> GitHub Repo</a>
+                <a id="projectLiveLink" class="project-choice-link" href="#" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Live Project</a>
+            </div>
+        </div>
     </div>
 
     <!-- 3D Background Canvas -->
@@ -39,36 +88,73 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
-                <i class="fas fa-cube"></i>
-            </div>
             <ul class="nav-links">
+                <li><a href="#home" class="active nav-home" aria-label="Home"><i class="fas fa-house"></i></a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#credentials">Credentials</a></li>
-                <li><a href="#github">GitHub</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="#contact" class="nav-calendar" aria-label="Contact"><i class="far fa-calendar"></i></a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-avatar">
-                <div class="avatar-placeholder">
-                    <img src="Aniket.png" alt="Aniket Yadav" class="avatar-image" width="400" height="400" fetchpriority="high" decoding="async">
-                    <div class="avatar-fallback">
-                        <i class="fas fa-user"></i>
-                    </div>
-                </div>
+    <!-- Identity Rail (collapsed) + Contact Card (expanded) -->
+    <div class="identity-rail" id="identityRail" role="button" tabindex="0" aria-expanded="false" aria-controls="identityCard">
+        <div class="rail-avatar"><img src="Aniket.png" alt="Aniket Yadav"></div>
+        <span>Data Scientist</span>
+        <i class="fas fa-chevron-right rail-chevron"></i>
+    </div>
+    <div class="identity-card" id="identityCard">
+        <div class="identity-card-header">
+            <div class="identity-card-avatar"><img src="Aniket.png" alt="Aniket Yadav"></div>
+            <div class="identity-card-id">
+                <div class="identity-card-name">Aniket Yadav</div>
+                <span class="identity-card-role">Data Scientist</span>
             </div>
+            <button class="identity-card-close" id="identityCardClose" aria-label="Close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="identity-card-divider"></div>
+        <div class="identity-card-row">
+            <div class="identity-card-row-icon"><i class="fas fa-envelope"></i></div>
+            <div class="identity-card-row-text">
+                <span class="identity-card-row-label">Email</span>
+                <span class="identity-card-row-value">anikety7905@gmail.com</span>
+            </div>
+        </div>
+        <div class="identity-card-row">
+            <div class="identity-card-row-icon"><i class="fas fa-location-dot"></i></div>
+            <div class="identity-card-row-text">
+                <span class="identity-card-row-label">Location</span>
+                <span class="identity-card-row-value">Lucknow, India</span>
+            </div>
+        </div>
+        <div class="identity-card-divider"></div>
+        <div class="identity-card-socials">
+            <a href="mailto:anikety7905@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            <a href="https://github.com/Aniketyadav29" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/aniketyadav29" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#contact" id="identityCardResumeLink" aria-label="View resume"><i class="fas fa-file-lines"></i></a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero content-section is-active" id="home" data-page="home">
+        <canvas id="hero3d-canvas" class="hero-3d-orb" aria-hidden="true"></canvas>
+        <div class="hero-content">
             <div class="hero-text">
-                <p class="greeting">HELLO! I'M</p>
+                <p class="greeting">HELLO I'M</p>
                 <h1 class="hero-title">Aniket Yadav</h1>
                 <p class="hero-subtitle">A passionate <span class="highlight">Data Scientist & AI-Driven</span> Engineer</p>
+                <p class="hero-meta"><i class="fas fa-location-dot"></i> Lucknow, India <span class="hero-meta-dot">&middot;</span> <span class="hero-meta-available"><span class="hero-meta-pulse"></span>Open to opportunities</span></p>
                 <p class="hero-description">Forward-thinking <strong>Data Science professional</strong> currently completing my final year of B.Tech at BBD. I specialize in leveraging <strong>Artificial Intelligence</strong> and <strong>Machine Learning</strong> to drive innovation and organizational impact. With a technical portfolio encompassing AI-driven credit risk evaluation systems and intelligent career platforms, I bring a holistic approach to problem-solving.</p>
+                <div class="hero-highlights">
+                    <a href="#projects" class="hero-highlight-chip"><i class="fas fa-diagram-project"></i> <strong>4+</strong> Projects Shipped</a>
+                    <a href="#credentials" class="hero-highlight-chip"><i class="fas fa-certificate"></i> <strong>6</strong> Certifications</a>
+                    <a href="#skills" class="hero-highlight-chip"><i class="fas fa-layer-group"></i> <strong>55+</strong> Technologies</a>
+                    <a href="#github" class="hero-highlight-chip"><i class="fab fa-github"></i> Open Source Contributor</a>
+                </div>
                 <div class="hero-buttons">
                     <button class="btn-resume" id="downloadResume">
                         <i class="fas fa-eye"></i> View Resume
@@ -76,13 +162,73 @@
                     <a href="https://linkedin.com/in/aniketyadav29" target="_blank" class="btn-contact">
                         <i class="fab fa-linkedin"></i> Connect
                     </a>
+                    <a href="https://github.com/Aniketyadav29" target="_blank" class="btn-icon-only" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="mailto:anikety7905@gmail.com" class="btn-icon-only" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
                 </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-image-frame">
+                    <img src="Aniket.png" alt="Aniket Yadav">
+                </div>
+                <div class="hero-image-badge"><i class="fas fa-brain"></i> AI &amp; ML</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Currently Section (Home) -->
+    <section class="home-currently content-section is-active" id="currently" data-page="home">
+        <div class="currently-grid">
+            <div class="currently-card">
+                <span class="currently-tag"><span class="hero-meta-pulse"></span> Now Building</span>
+                <p>Refining <strong>Credo-fin</strong>'s risk-scoring pipeline and experimenting with retrieval-augmented pipelines for more explainable AI decisions.</p>
+            </div>
+            <div class="currently-card">
+                <span class="currently-tag"><i class="fas fa-graduation-cap"></i> Currently Learning</span>
+                <p>Deepening my knowledge of distributed backend systems, vector databases, and advanced prompt engineering workflows.</p>
+            </div>
+            <div class="currently-card">
+                <span class="currently-tag"><i class="fas fa-bullseye"></i> Looking For</span>
+                <p>Internships and entry-level roles in Data Science, AI Engineering, or Backend Development where I can ship real, production-grade systems.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Focus Areas Section (Home) -->
+    <section class="home-focus content-section is-active" id="focus" data-page="home">
+        <div class="section-header">
+            <p class="section-label">WHAT I DO</p>
+            <h2>Core Focus Areas</h2>
+        </div>
+        <div class="focus-grid">
+            <div class="focus-tile">
+                <div class="focus-icon"><i class="fas fa-brain"></i></div>
+                <h4>AI & Machine Learning</h4>
+                <p>Building intelligent systems — from credit-risk models to LLM-powered RAG pipelines that solve real problems.</p>
+            </div>
+            <div class="focus-tile">
+                <div class="focus-icon"><i class="fas fa-server"></i></div>
+                <h4>Backend & APIs</h4>
+                <p>Designing reliable, production-ready backend systems with clean APIs, auth, and scalable data layers.</p>
+            </div>
+            <div class="focus-tile">
+                <div class="focus-icon"><i class="fas fa-robot"></i></div>
+                <h4>Automation & Bots</h4>
+                <p>Workflow automation and conversational tools that cut manual effort and streamline everyday tasks.</p>
+            </div>
+            <div class="focus-tile">
+                <div class="focus-icon"><i class="fas fa-chart-line"></i></div>
+                <h4>Data-Driven Products</h4>
+                <p>Turning raw data into usable insight — from analysis to fully deployed, user-facing applications.</p>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section class="about" id="about">
+    <section class="about content-section" id="about" data-page="about">
         <div class="section-header">
             <p class="section-label">WHO I AM</p>
             <h2>About Me</h2>
@@ -90,7 +236,7 @@
         <div class="about-content">
             <div class="about-description">
                 <p>I build systems that work — fast, reliable, and intelligently scalable.</p>
-                <p>Specializing in full-stack engineering, workflow automation, and custom AI integrations. I bridge traditional computing structures with dynamic models like LLMs and RAG pipelines to build maintainable applications designed for real-world reliability.</p>
+                <p>Specializing in Data Analysis, workflow automation, and custom AI integrations. Also with working knowledge of full-stack development, I bridge traditional computing structures with dynamic models like LLMs and RAG pipelines to build maintainable applications designed for real-world reliability.</p>
             </div>
             <div class="education">
                 <h3>EDUCATION</h3>
@@ -99,28 +245,46 @@
                     <p class="year">2023 – Present</p>
                     <p class="description">Currently pursuing a Bachelor of Technology (B.Tech) in Computer Science & Engineering. Actively specializing in practical application of machine learning architectures and backend robustness under mentorship.</p>
                 </div>
+                <div class="education-item">
+                    <h4>S.G.R Inter College (Jaunpur)</h4>
+                    <p class="year">2020 – 2022</p>
+                    <p class="description">Completed higher secondary education at this institution.</p>
+                </div>
+                <div class="education-item">
+                    <h4>T.V.S Public School (Azamgarh)</h4>
+                    <p class="year">2018 – 2020</p>
+                    <p class="description">Completed secondary education at this institution.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Flat Projects Slider Section -->
-    <section class="projects" id="projects">
+    <section class="projects content-section is-active" id="projects" data-page="home projects">
         <div class="projects-header-wrapper">
             <div class="projects-header-left">
-                <p class="section-label">FEATURED WORK</p>
-                <h2>Selected Projects</h2>
+                <p class="section-label">PORTFOLIO</p>
+                <h2>Selected Works</h2>
+                <p class="section-subtitle">5 projects - Tap to explore</p>
             </div>
             <div class="projects-nav-controls">
-                <button class="slider-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
-                <button class="slider-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                <button class="slider-btn prev-btn" type="button" aria-label="Previous project" title="Previous project"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn next-btn" type="button" aria-label="Next project" title="Next project"><i class="fas fa-chevron-right"></i></button>
             </div>
+        </div>
+
+        <div class="project-filters" aria-label="Project filters">
+            <button class="project-filter active" type="button">All</button>
+            <button class="project-filter" type="button">Live</button>
+            <button class="project-filter" type="button">AI</button>
+            <button class="project-filter" type="button">Backend</button>
         </div>
 
         <div class="projects-slider-viewport">
             <div class="projects-track">
                 
                 <!-- Project 1 -->
-                <div class="project-slide active" data-index="0">
+                <div class="project-slide project-credo is-featured active" data-index="0">
                     <div class="slide-watermark"><i class="fas fa-brain"></i></div>
                     <div class="slide-overlay"></div>
                     <div class="slide-header">
@@ -128,40 +292,88 @@
                         <span class="slide-number">01</span>
                     </div>
                     <div class="slide-content">
-                        <h3>Credo-fin</h3>
-                        <p>An AI-driven credit scoring platform engineered to assess borrower risk profiles for underbanked populations.</p>
+                        <h3>Credo-fin <span class="featured-badge"><i class="fas fa-star"></i> Featured</span></h3>
+                        <p>An AI-driven credit scoring platform engineered to assess borrower risk profiles for underbanked populations, combining gradient-boosted models with an LLM reasoning layer for explainable decisions.</p>
+                        <ul class="slide-highlights">
+                            <li><i class="fas fa-check"></i> XGBoost risk model trained on alternative credit signals for thin-file borrowers</li>
+                            <li><i class="fas fa-check"></i> Gemini LLM layer generates human-readable explanations for every score</li>
+                            <li><i class="fas fa-check"></i> MongoDB-backed pipeline for fast, scalable applicant profile lookups</li>
+                        </ul>
+                        <div class="slide-metric-row">
+                            <div class="slide-metric"><strong>AI</strong><span>Credit Scoring</span></div>
+                            <div class="slide-metric"><strong>Explainable</strong><span>LLM Reasoning</span></div>
+                        </div>
                         <div class="slide-tags">
                             <span>Python</span><span>XGBoost</span><span>Gemini LLM</span><span>MongoDB</span>
                         </div>
-                        <a href="https://github.com/Aniketyadav29" target="_blank" class="btn-slide-link"><i class="fas fa-code"></i> Code</a>
+                        <div class="project-actions">
+                            <a href="https://github.com/Aniketyadav29/CREDO-ONE.git" target="_blank" class="btn-slide-link btn-code"><i class="fas fa-code"></i> Code</a>
+                            <a href="https://credo-one-1.vercel.app/" target="_blank" class="btn-slide-link btn-live"><i class="fas fa-arrow-up-right-from-square"></i> Live</a>
+                        </div>
+                        <a href="https://credo-one-1.vercel.app/" target="_blank" class="project-url-chip"><i class="fas fa-link"></i> credo-one-1.vercel.app</a>
                     </div>
                 </div>
 
                 <!-- Project 2 -->
-                <div class="project-slide" data-index="1">
-                    <div class="slide-watermark"><i class="fas fa-microphone-lines"></i></div>
+                <div class="project-slide project-recipe-book is-featured" data-index="1">
+                    <div class="slide-watermark"><i class="fas fa-book-open"></i></div>
                     <div class="slide-overlay"></div>
                     <div class="slide-header">
                         <span class="slide-status"><span class="status-dot"></span> Live</span>
                         <span class="slide-number">02</span>
                     </div>
                     <div class="slide-content">
-                        <h3>Voice-Based Assistant</h3>
-                        <p>A fully modular desktop voice controller built utilizing advanced Python speech libraries for system automation.</p>
-                        <div class="slide-tags">
-                            <span>Python</span><span>SpeechRecognition</span><span>Automation</span>
+                        <h3>Recipe Book <span class="featured-badge"><i class="fas fa-star"></i> Featured</span></h3>
+                        <p>A web app for browsing, saving, and organizing recipes in one clean, easy-to-use collection, built with a focus on fast search and a distraction-free reading experience.</p>
+                        <ul class="slide-highlights">
+                            <li><i class="fas fa-check"></i> Instant search and category filters for quickly finding recipes</li>
+                            <li><i class="fas fa-check"></i> Personal collections to save and organize favourite dishes</li>
+                            <li><i class="fas fa-check"></i> Responsive, mobile-friendly layout for cooking on the go</li>
+                        </ul>
+                        <div class="slide-metric-row">
+                            <div class="slide-metric"><strong>Fast</strong><span>Search & Filter</span></div>
+                            <div class="slide-metric"><strong>Clean</strong><span>UI / UX</span></div>
                         </div>
-                        <a href="https://github.com/Aniketyadav29" target="_blank" class="btn-slide-link"><i class="fas fa-code"></i> Code</a>
+                        <div class="slide-tags">
+                            <span>Web App</span><span>Recipes</span><span>UI/UX</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="https://github.com/Aniketyadav29/Recipe_Book.git" target="_blank" class="btn-slide-link btn-code"><i class="fas fa-code"></i> Code</a>
+                            <a href="https://recipe-book-psi-sage.vercel.app/" target="_blank" class="btn-slide-link btn-live"><i class="fas fa-arrow-up-right-from-square"></i> Live</a>
+                        </div>
+                        <a href="https://recipe-book-psi-sage.vercel.app/" target="_blank" class="project-url-chip"><i class="fas fa-link"></i> recipe-book-psi-sage.vercel.app</a>
                     </div>
                 </div>
 
                 <!-- Project 3 -->
-                <div class="project-slide" data-index="2">
-                    <div class="slide-watermark"><i class="fas fa-leaf"></i></div>
+                <div class="project-slide project-nano-link" data-index="2">
+                    <div class="slide-watermark"><i class="fas fa-link"></i></div>
                     <div class="slide-overlay"></div>
                     <div class="slide-header">
                         <span class="slide-status"><span class="status-dot"></span> Live</span>
                         <span class="slide-number">03</span>
+                    </div>
+                    <div class="slide-content">
+                        <h3>Nano Link</h3>
+                        <p>A compact URL shortener built for secure redirects, clean link sharing, and fast web access.</p>
+                        <div class="slide-tags">
+                            <span>URL Shortener</span><span>Secure Redirects</span><span>Web App</span>
+                        </div>
+                        <div class="project-actions">
+                            <a href="https://github.com/Aniketyadav29/NanoLink.git" target="_blank" class="btn-slide-link btn-code"><i class="fas fa-code"></i> Code</a>
+                            <a href="https://nano-link-dun.vercel.app/" target="_blank" class="btn-slide-link btn-live"><i class="fas fa-arrow-up-right-from-square"></i> Live</a>
+                        </div>
+                        <a href="https://nano-link-dun.vercel.app/" target="_blank" class="project-url-chip"><i class="fas fa-link"></i> nano-link-dun.vercel.app</a>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-slide project-aayu" data-index="3">
+                    <div class="slide-watermark"><i class="fas fa-leaf"></i></div>
+                    <div class="slide-overlay"></div>
+                    <div class="slide-header">
+                        <span class="slide-status"><span class="status-dot"></span> Live</span>
+                        <span class="slide-number">04</span>
                     </div>
                     <div class="slide-content">
                         <h3>AAYU</h3>
@@ -169,25 +381,33 @@
                         <div class="slide-tags">
                             <span>Flask</span><span>Twilio API</span><span>RAG Pipeline</span><span>SQLite</span>
                         </div>
-                        <a href="https://github.com/Aniketyadav29" target="_blank" class="btn-slide-link"><i class="fas fa-code"></i> Code</a>
+                        <div class="project-actions">
+                            <a href="https://github.com/Aniketyadav29/aayu-ayurvedic-ai.git" target="_blank" class="btn-slide-link btn-code"><i class="fas fa-code"></i> Code</a>
+                            <a href="https://aayu-ayurvedic-ai.vercel.app/" target="_blank" class="btn-slide-link btn-live"><i class="fas fa-arrow-up-right-from-square"></i> Live</a>
+                        </div>
+                        <a href="https://aayu-ayurvedic-ai.vercel.app/" target="_blank" class="project-url-chip"><i class="fas fa-link"></i> aayu-ayurvedic-ai.vercel.app</a>
                     </div>
                 </div>
 
-                <!-- Project 4 -->
-                <div class="project-slide" data-index="3">
-                    <div class="slide-watermark"><i class="fas fa-briefcase"></i></div>
+                <!-- Project 5 -->
+                <div class="project-slide project-email-automation" data-index="4">
+                    <div class="slide-watermark"><i class="fas fa-envelope-open-text"></i></div>
                     <div class="slide-overlay"></div>
                     <div class="slide-header">
                         <span class="slide-status"><span class="status-dot"></span> Live</span>
-                        <span class="slide-number">04</span>
+                        <span class="slide-number">05</span>
                     </div>
                     <div class="slide-content">
-                        <h3>AURA AI Career Co-Pilot</h3>
-                        <p>An intelligent career-focused platform designed with advanced web scraping and programmatic profile matching agents.</p>
+                        <h3>Email Automation System <span class="team-project-badge">Team project</span></h3>
+                        <p>An automation tool for efficient email campaigns, automated sequences, and personalized outreach workflows.</p>
                         <div class="slide-tags">
-                            <span>Python</span><span>Web Scraping</span><span>AI Agents</span>
+                            <span>Email</span><span>Automation</span><span>Campaigns</span>
                         </div>
-                        <a href="https://github.com/Aniketyadav29" target="_blank" class="btn-slide-link"><i class="fas fa-code"></i> Code</a>
+                        <div class="project-actions">
+                            <a href="https://github.com/AnupamLata/Email-Automation-Tool.git" target="_blank" class="btn-slide-link btn-code"><i class="fas fa-code"></i> Code</a>
+                            <a href="https://email-automation-tool-3qzm.vercel.app/" target="_blank" class="btn-slide-link btn-live"><i class="fas fa-arrow-up-right-from-square"></i> Live</a>
+                        </div>
+                        <a href="https://email-automation-tool-3qzm.vercel.app/" target="_blank" class="project-url-chip"><i class="fas fa-link"></i> email-automation-tool-3qzm.vercel.app</a>
                     </div>
                 </div>
 
@@ -200,13 +420,14 @@
                 <span class="dash" data-index="1"></span>
                 <span class="dash" data-index="2"></span>
                 <span class="dash" data-index="3"></span>
+                <span class="dash" data-index="4"></span>
             </div>
             <a href="https://github.com/Aniketyadav29" target="_blank" class="btn-view-all">View All Projects <i class="fas fa-external-link-alt"></i></a>
         </div>
     </section>
 
     <!-- Stats Section -->
-    <section class="stats">
+    <section class="stats content-section is-active" id="stats" data-page="home about">
         <div class="stat-item">
             <h3>4+</h3>
             <p>Projects Built</p>
@@ -216,7 +437,7 @@
             <p>GitHub Repos</p>
         </div>
         <div class="stat-item">
-            <h3>3</h3>
+            <h3>6</h3>
             <p>Certifications</p>
         </div>
         <div class="stat-item">
@@ -226,7 +447,7 @@
     </section>
 
     <!-- Skills Section -->
-    <section class="skills" id="skills">
+    <section class="skills content-section" id="skills" data-page="skills">
         <div class="section-header">
             <p class="section-label">EXPERTISE</p>
             <h2>Technical Skills</h2>
@@ -343,22 +564,23 @@
     </section>
 
     <!-- Credentials Section -->
-    <section class="credentials" id="credentials">
+    <section class="credentials content-section" id="credentials" data-page="credentials">
         <div class="section-header">
             <p class="section-label">ACHIEVEMENTS</p>
             <h2>My Credentials</h2>
-            <p class="credentials-subtitle">3 verified achievements and certificates</p>
+            <p class="credentials-subtitle">6 verified achievements and certificates</p>
         </div>
 
         <div class="credential-filters" aria-label="Credential filters">
             <button class="credential-filter active" type="button" data-credential-filter="all" aria-pressed="true">All</button>
-            <button class="credential-filter" type="button" data-credential-filter="certificate" aria-pressed="false">Certificates <span>2</span></button>
+            <button class="credential-filter" type="button" data-credential-filter="certificate" aria-pressed="false">Certificates <span>5</span></button>
             <button class="credential-filter" type="button" data-credential-filter="hackathon" aria-pressed="false">Hackathon <span>1</span></button>
         </div>
 
         <div class="credentials-timeline">
             <article class="credential-card credential-with-image" data-credential-type="certificate">
                 <span class="credential-pin" aria-hidden="true"></span>
+                <span class="credential-verified-tag"><i class="fas fa-shield-halved"></i> Verified</span>
                 <a href="Python certificate.png" target="_blank" class="credential-image-container" aria-label="Open Python certificate">
                     <img src="Python certificate.png" alt="Python course certificate" class="cert-image" loading="lazy">
                 </a>
@@ -371,6 +593,7 @@
 
             <article class="credential-card credential-with-image" data-credential-type="certificate">
                 <span class="credential-pin" aria-hidden="true"></span>
+                <span class="credential-verified-tag"><i class="fas fa-shield-halved"></i> Verified</span>
                 <a href="Prompt emgineering certificate.png" target="_blank" class="credential-image-container" aria-label="Open prompt engineering certificate">
                     <img src="Prompt emgineering certificate.png" alt="Prompt engineering certificate" class="cert-image" loading="lazy">
                 </a>
@@ -381,8 +604,48 @@
                 </div>
             </article>
 
+            <article class="credential-card credential-with-image" data-credential-type="certificate">
+                <span class="credential-pin" aria-hidden="true"></span>
+                <span class="credential-verified-tag"><i class="fas fa-shield-halved"></i> Verified</span>
+                <a href="rest-api-intermediate-certificate.png" target="_blank" class="credential-image-container" aria-label="Open Rest API Intermediate certificate">
+                    <img src="rest-api-intermediate-certificate.png" alt="Rest API Intermediate certificate" class="cert-image" loading="lazy">
+                </a>
+                <div class="credential-copy">
+                    <span class="credential-type">Certificate</span>
+                    <h4>Rest API (Intermediate)</h4>
+                    <p>HackerRank</p>
+                </div>
+            </article>
+
+            <article class="credential-card credential-with-image" data-credential-type="certificate">
+                <span class="credential-pin" aria-hidden="true"></span>
+                <span class="credential-verified-tag"><i class="fas fa-shield-halved"></i> Verified</span>
+                <a href="software-engineer-intern-certificate.png" target="_blank" class="credential-image-container" aria-label="Open Software Engineer Intern certificate">
+                    <img src="software-engineer-intern-certificate.png" alt="Software Engineer Intern certificate" class="cert-image" loading="lazy">
+                </a>
+                <div class="credential-copy">
+                    <span class="credential-type">Certificate</span>
+                    <h4>Software Engineer Intern</h4>
+                    <p>HackerRank</p>
+                </div>
+            </article>
+
+            <article class="credential-card credential-with-image" data-credential-type="certificate">
+                <span class="credential-pin" aria-hidden="true"></span>
+                <span class="credential-verified-tag"><i class="fas fa-shield-halved"></i> Verified</span>
+                <a href="DSA certificate.png" target="_blank" class="credential-image-container" aria-label="Open Data Structures and Algorithms certificate">
+                    <img src="DSA certificate.png" alt="Basics of Data Structures and Algorithms certificate" class="cert-image" loading="lazy">
+                </a>
+                <div class="credential-copy">
+                    <span class="credential-type">Certificate</span>
+                    <h4>Basics of Data Structures and Algorithms</h4>
+                    <p>Simplilearn SkillUp</p>
+                </div>
+            </article>
+
             <article class="credential-card credential-with-image" data-credential-type="hackathon">
                 <span class="credential-pin" aria-hidden="true"></span>
+                <span class="credential-verified-tag"><i class="fas fa-shield-halved"></i> Verified</span>
                 <a href="Hackthon certificate.png" target="_blank" class="credential-image-container" aria-label="Open hackathon certificate">
                     <img src="Hackthon certificate.png" alt="Hackathon certificate" class="cert-image" loading="lazy">
                 </a>
@@ -396,7 +659,7 @@
     </section>
 
     <!-- GitHub Contributions Section -->
-    <section class="github-contributions" id="github">
+    <section class="github-contributions content-section" id="github" data-page="about">
         <div class="section-header">
             <p class="section-label">OPEN SOURCE DEVELOPER</p>
             <h2>Daily Contributions</h2>
@@ -415,7 +678,7 @@
             <div class="github-graph">
                 <div class="github-card-container">
                     <!-- ULTRA CACHE BUSTER ADDED & STRICT LOWERCASE USERNAME -->
-                    <img src="https://github-readme-stats.vercel.app/api?username=aniketyadav29&show_icons=true&theme=dark&hide_border=true&bg_color=0a0a0a&title_color=ffa500&icon_color=ffa500&text_color=e0e0e0&cache_seconds=0&v=999" alt="GitHub Stats" class="github-card" loading="lazy">
+                    <img src="https://github-readme-stats.vercel.app/api?username=aniketyadav29&show_icons=true&theme=dark&hide_border=true&bg_color=02343F&title_color=F0EDCC&icon_color=F0EDCC&text_color=F0EDCC&cache_seconds=0&v=999" alt="GitHub Stats" class="github-card" loading="lazy">
                 </div>
 
                 <!-- LIVE CONTRIBUTION HEATMAP GRAPH -->
@@ -435,21 +698,33 @@
     </section>
 
     <!-- Contact Section -->
-    <section class="contact" id="contact">
+    <section class="contact content-section" id="contact" data-page="contact">
+        <div class="section-header contact-page-header">
+            <p class="section-label">CONTACT - WORKFLOW - IDENTITY</p>
+            <h2>Reach Out</h2>
+            <p class="contact-intro">I'm always open to interesting projects, collaborations, or just a good conversation about tech.</p>
+        </div>
         <div class="contact-content">
             <div class="contact-left">
+                <p class="section-label">SITE - EMAIL - SMS</p>
                 <h3>Tell me what you want to build.</h3>
                 <p>Looking for a performant custom API interface, custom automation system workflows, or LLM agents? Let's discuss requirements directly.</p>
+                <div class="service-grid">
+                    <div class="service-tile"><i class="fas fa-robot"></i><strong>Bots & automation</strong><span>Telegram, workflow, and utility systems</span></div>
+                    <div class="service-tile"><i class="fas fa-server"></i><strong>Backend builds</strong><span>APIs, databases, auth, and production-ready server logic</span></div>
+                    <div class="service-tile"><i class="fas fa-wand-magic-sparkles"></i><strong>AI integrations</strong><span>Practical AI features woven into real products</span></div>
+                </div>
                 <div class="contact-meta">
-                    <div class="meta-item"><span class="meta-label">ROUTINE RESPONSE</span><span class="meta-value">Within 24-48 Hours</span></div>
+                    <div class="meta-item"><span class="meta-label">RESPONSE</span><span class="meta-value">Usually within 24-48 hours</span></div>
+                    <div class="meta-item"><span class="meta-label">LOCATION</span><span class="meta-value">Lucknow</span></div>
                 </div>
             </div>
             <div class="contact-right">
                 <div class="contact-form">
                     <form id="contactForm">
-                        <div class="form-group"><label>YOUR NAME</label><input type="text" placeholder="Full name" required></div>
-                        <div class="form-group"><label>EMAIL ADDRESS</label><input type="email" placeholder="you@example.com" required></div>
-                        <div class="form-group"><label>YOUR BRIEF</label><textarea placeholder="Describe the scope, timeline, and objective" rows="5" required></textarea></div>
+                        <div class="form-group"><label>YOUR NAME</label><input type="text" name="from_name" placeholder="Full name" required></div>
+                        <div class="form-group"><label>EMAIL ADDRESS</label><input type="email" name="from_email" placeholder="you@example.com" required></div>
+                        <div class="form-group"><label>YOUR BRIEF</label><textarea name="message" placeholder="Describe the scope, timeline, and objective" rows="5" required></textarea></div>
                         <button type="submit" class="btn-send">Send Brief →</button>
                     </form>
                 </div>
@@ -473,6 +748,12 @@
         <button class="float-btn toggle-3d" title="Toggle Graphics Engine (3D Sphere vs Grid)"><i class="fas fa-cube"></i></button>
     </div>
 
+    <!-- EmailJS SDK - sends the contact form to your email, no backend needed -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        emailjs.init({ publicKey: 'mhsSzxpKeIdEadgcR' });
+    </script>
+
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
     <script src="script.js"></script>
@@ -482,7 +763,6 @@
     <script src="https://cdn.jsdelivr.net/npm/TagCloud@2.2.0/dist/TagCloud.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Updated array combining FontAwesome icons and text
             const mySkills = [
                 '<div class="sphere-item"><i class="fas fa-network-wired"></i><span>aiohttp</span></div>',
                 '<div class="sphere-item"><i class="fas fa-rocket"></i><span>Antigravity</span></div>',
@@ -541,7 +821,6 @@
                 '<div class="sphere-item"><i class="fas fa-project-diagram"></i><span>XGBoost</span></div>'
             ];
 
-            // Increased radius drastically to prevent the 55 icons from overlapping.
             const radiusValue = window.innerWidth > 768 ? 400 : 200;
 
             TagCloud('#skills-3d-canvas-container', mySkills, {
@@ -553,8 +832,6 @@
                 useHTML: true
             });
 
-            // The default library sanitizes the HTML arrays into raw text. 
-            // This runs immediately after the sphere loads to convert the text back into proper HTML elements!
             const items = document.querySelectorAll('.tagcloud--item');
             items.forEach(function(item) {
                 item.innerHTML = item.textContent;
