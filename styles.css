@@ -1834,13 +1834,19 @@ body::after {
 }
 
 .hero-image {
-    min-width: 330px;
-    min-height: 330px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: min(330px, 100%);
+    position: relative;
 }
 
 .hero-image-frame {
-    width: 330px;
-    height: 330px;
+    position: relative;
+    width: min(330px, 75vw);
+    height: min(330px, 75vw);
+    aspect-ratio: 1 / 1;
     border-radius: 36px;
     padding: 8px;
     background:
