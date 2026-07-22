@@ -821,7 +821,7 @@
                 '<div class="sphere-item"><i class="fas fa-project-diagram"></i><span>XGBoost</span></div>'
             ];
 
-            const radiusValue = window.innerWidth > 768 ? 400 : 200;
+            const radiusValue = window.innerWidth > 768 ? 380 : (window.innerWidth > 480 ? 200 : 135);
 
             TagCloud('#skills-3d-canvas-container', mySkills, {
                 radius: radiusValue,
