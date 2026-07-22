@@ -198,27 +198,43 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: false });
     }
 
-    slides.forEach(slide => {
-        slide.addEventListener('pointermove', (event) => {
-            const rect = slide.getBoundingClientRect();
-            const x = (event.clientX - rect.left) / rect.width;
-            const y = (event.clientY - rect.top) / rect.height;
-            const rotateY = (x - 0.5) * 10;
-            const rotateX = (0.5 - y) * 8;
+    // Fine-pointer + hover check: on touch phones/tablets, pointermove fires while
+    // scrolling/dragging with a finger and pointerleave often never fires, which left
+    // cards permanently tilted/skewed on mobile. So this 3D tilt is fine-pointer only.
+    const supportsHoverTilt = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-            slide.style.setProperty('--tilt-x', rotateX.toFixed(2) + 'deg');
-            slide.style.setProperty('--tilt-y', rotateY.toFixed(2) + 'deg');
-            slide.style.setProperty('--glow-x', (x * 100).toFixed(1) + '%');
-            slide.style.setProperty('--glow-y', (y * 100).toFixed(1) + '%');
+    if (supportsHoverTilt) {
+        slides.forEach(slide => {
+            slide.addEventListener('pointermove', (event) => {
+                if (event.pointerType !== 'mouse') return;
+                const rect = slide.getBoundingClientRect();
+                const x = (event.clientX - rect.left) / rect.width;
+                const y = (event.clientY - rect.top) / rect.height;
+                const rotateY = (x - 0.5) * 10;
+                const rotateX = (0.5 - y) * 8;
+
+                slide.style.setProperty('--tilt-x', rotateX.toFixed(2) + 'deg');
+                slide.style.setProperty('--tilt-y', rotateY.toFixed(2) + 'deg');
+                slide.style.setProperty('--glow-x', (x * 100).toFixed(1) + '%');
+                slide.style.setProperty('--glow-y', (y * 100).toFixed(1) + '%');
+            });
+
+            slide.addEventListener('pointerleave', () => {
+                slide.style.setProperty('--tilt-x', '0deg');
+                slide.style.setProperty('--tilt-y', '0deg');
+                slide.style.setProperty('--glow-x', '50%');
+                slide.style.setProperty('--glow-y', '35%');
+            });
         });
-
-        slide.addEventListener('pointerleave', () => {
+    } else {
+        // Make sure touch devices always start neutral (no leftover tilt/glow state).
+        slides.forEach(slide => {
             slide.style.setProperty('--tilt-x', '0deg');
             slide.style.setProperty('--tilt-y', '0deg');
             slide.style.setProperty('--glow-x', '50%');
             slide.style.setProperty('--glow-y', '35%');
         });
-    });
+    }
 
     const projectChoiceModal = document.getElementById('projectChoiceModal');
     const projectChoiceTitle = document.getElementById('projectChoiceTitle');
@@ -364,29 +380,40 @@ document.addEventListener('DOMContentLoaded', () => {
         VanillaTilt.init(document.querySelectorAll('[data-tilt]'), { max: 12, speed: 400, scale: 1.02 });
     }
 
-    // 3D tilt + shine effect for credential cards
+    // 3D tilt + shine effect for credential cards (mouse/trackpad only — see note above)
+    const supportsHoverTilt = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     const credentialTiltCards = document.querySelectorAll('.credential-card');
-    credentialTiltCards.forEach(card => {
-        card.addEventListener('pointermove', (event) => {
-            const rect = card.getBoundingClientRect();
-            const x = (event.clientX - rect.left) / rect.width;
-            const y = (event.clientY - rect.top) / rect.height;
-            const rotateY = (x - 0.5) * 12;
-            const rotateX = (0.5 - y) * 10;
+    if (supportsHoverTilt) {
+        credentialTiltCards.forEach(card => {
+            card.addEventListener('pointermove', (event) => {
+                if (event.pointerType !== 'mouse') return;
+                const rect = card.getBoundingClientRect();
+                const x = (event.clientX - rect.left) / rect.width;
+                const y = (event.clientY - rect.top) / rect.height;
+                const rotateY = (x - 0.5) * 12;
+                const rotateX = (0.5 - y) * 10;
 
-            card.style.setProperty('--tilt-x', rotateX.toFixed(2) + 'deg');
-            card.style.setProperty('--tilt-y', rotateY.toFixed(2) + 'deg');
-            card.style.setProperty('--shine-x', (x * 100).toFixed(1) + '%');
-            card.style.setProperty('--shine-y', (y * 100).toFixed(1) + '%');
+                card.style.setProperty('--tilt-x', rotateX.toFixed(2) + 'deg');
+                card.style.setProperty('--tilt-y', rotateY.toFixed(2) + 'deg');
+                card.style.setProperty('--shine-x', (x * 100).toFixed(1) + '%');
+                card.style.setProperty('--shine-y', (y * 100).toFixed(1) + '%');
+            });
+
+            card.addEventListener('pointerleave', () => {
+                card.style.setProperty('--tilt-x', '0deg');
+                card.style.setProperty('--tilt-y', '0deg');
+                card.style.setProperty('--shine-x', '50%');
+                card.style.setProperty('--shine-y', '30%');
+            });
         });
-
-        card.addEventListener('pointerleave', () => {
+    } else {
+        credentialTiltCards.forEach(card => {
             card.style.setProperty('--tilt-x', '0deg');
             card.style.setProperty('--tilt-y', '0deg');
             card.style.setProperty('--shine-x', '50%');
             card.style.setProperty('--shine-y', '30%');
         });
-    });
+    }
 
     // Skill category filters switch to the grid so the selected results are visible.
     const filterBtns = document.querySelectorAll('.filter-btn');

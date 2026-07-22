@@ -2513,3 +2513,12 @@ body::after {
         min-height: 560px;
     }
 }
+
+/* ============================================
+   MOBILE CONSISTENCY HARDENING
+   (keeps images/media from ever overflowing
+   the viewport on phones, regardless of which
+   layer above set a fixed size)
+   ============================================ */
+img, svg, video, iframe { max-width: 100%; }
+html, body { max-width: 100vw; }

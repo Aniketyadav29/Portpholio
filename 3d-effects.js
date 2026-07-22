@@ -36,8 +36,10 @@
         const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.z = 8;
 
-        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        const isSmallScreen = window.innerWidth <= 768;
+
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isSmallScreen, alpha: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isSmallScreen ? 1.5 : 2));
         renderer.setSize(window.innerWidth, window.innerHeight);
 
         // --- Rig that everything sits inside, used for mouse parallax ---
@@ -53,7 +55,7 @@
         ];
 
         const shapes = [];
-        const shapeCount = 7;
+        const shapeCount = isSmallScreen ? 4 : 7;
         for (let i = 0; i < shapeCount; i++) {
             const geo = shapeGeometries[i % shapeGeometries.length];
             const edges = new THREE.EdgesGeometry(geo);
@@ -85,7 +87,7 @@
         }
 
         // --- Connected particle network (constellation effect) ---
-        const nodeCount = 55;
+        const nodeCount = isSmallScreen ? 28 : 55;
         const spreadX = 20;
         const spreadY = 12;
         const spreadZ = 10;
@@ -136,7 +138,7 @@
 
         // --- Soft background starfield for depth ---
         const starsGeometry = new THREE.BufferGeometry();
-        const starCount = 500;
+        const starCount = isSmallScreen ? 220 : 500;
         const stars = new Float32Array(starCount * 3);
         for (let i = 0; i < starCount; i++) {
             stars[i * 3] = (Math.random() - 0.5) * 26;
@@ -167,8 +169,12 @@
         }
 
         const clock = new THREE.Clock();
+        let rafId = null;
+        let isPaused = document.hidden;
 
         function animate() {
+            if (isPaused) { rafId = null; return; }
+
             const t = clock.getElapsedTime();
 
             shapes.forEach((s) => {
@@ -187,10 +193,21 @@
             rig.rotation.y = targetRotation.y;
 
             renderer.render(scene, camera);
-            requestAnimationFrame(animate);
+            rafId = requestAnimationFrame(animate);
         }
 
-        window.addEventListener('resize', resize);
+        document.addEventListener('visibilitychange', () => {
+            isPaused = document.hidden;
+            if (!isPaused && !rafId) animate();
+        });
+
+        // Debounced resize: on mobile, the address bar hiding/showing while scrolling
+        // fires many resize events, which previously re-triggered layout work constantly.
+        let resizeTimer = null;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(resize, 150);
+        });
         animate();
     }
 
