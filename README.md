@@ -2,7 +2,7 @@
 
 Welcome to my professional portfolio! This repository contains my personal projects and showcases my work in Full-Stack Web Development and AI/ML technologies.
 
-[![Aniket's Portfolio](https://img.shields.io/badge/Portfolio-Aniket_Yadav-000000?style=plastic&logo=vercel&logoColor=white)](https://portpholio-sandy.vercel.app/)
+[![Aniket's Portfolio](https://img.shields.io/badge/Portfolio-Aniket_Yadav-0A66C2?style=plastic&logo=vercel&logoColor=white)](https://portpholio-sandy.vercel.app/)
 
 ## 🛠 Tech Stack
 *   **Web Development**: HTML, CSS, JavaScript
