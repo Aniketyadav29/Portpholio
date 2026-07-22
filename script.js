@@ -135,10 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    window.addEventListener('resize', () => {
-        updateSlider(currentIndex);
-    });
-
     if (viewport) {
         let dragStartX = 0;
         let dragStartY = 0;
