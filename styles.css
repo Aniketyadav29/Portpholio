@@ -2522,3 +2522,58 @@ body::after {
    ============================================ */
 img, svg, video, iframe { max-width: 100%; }
 html, body { max-width: 100vw; }
+
+/* ============================================
+   MOBILE HERO STACKING FIX (highest priority)
+   The hero previously tried to keep the photo
+   beside the text even on phones. Because the
+   photo has a fixed min-width, the row could
+   never actually shrink to fit a phone screen,
+   so the whole page rendered oversized and got
+   zoomed out by the browser to fit — the "tiny
+   floating card" look. This forces a real,
+   full-width, stacked mobile layout.
+   ============================================ */
+@media (max-width: 768px) {
+    .hero-content {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        gap: 1.75rem !important;
+    }
+
+    .hero-text {
+        max-width: 100% !important;
+        width: 100%;
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-meta,
+    .hero-highlights,
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .hero-description {
+        max-width: 100% !important;
+    }
+
+    .hero-image {
+        order: -1;
+        min-width: 0 !important;
+        width: 100%;
+        margin: 0 auto !important;
+        position: static !important;
+        transform: none !important;
+    }
+
+    .hero-image-frame {
+        width: min(240px, 60vw) !important;
+        height: min(240px, 60vw) !important;
+    }
+}
